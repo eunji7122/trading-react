@@ -1,5 +1,5 @@
 import React from "react";
-import CoinTable from "./CoinTable";
+import TradingCoinTable from "./TradingCoinTable";
 import TradingPriceTable from "./TradingPriceTable";
 import TradingOrder from "./TradingOrder";
 import TradingConclusionTable from "./TradingConclusionTable";
@@ -28,7 +28,7 @@ export default function TradingLayout() {
           </div>
         </div>
         <div className="">
-          <CoinTable />
+          <TradingCoinTable />
         </div>
       </div>
     </div>
