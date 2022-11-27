@@ -3,31 +3,37 @@ import Link from "next/link";
 
 export default function NavigationBar() {
   return (
-    <nav className="flex flex-row justify-between bg-slate-50">
-      <ul className="flex">
-        <li className="mr-6 pt-4 px-2">
-          <Link href="/trading" className="font-bold">
-            거래소
-          </Link>
-        </li>
-        <li className="mr-6 pt-4 px-2">
-          <Link href="/trading" className="font-bold">
-            투자내역
-          </Link>
-        </li>
-      </ul>
-      <div>
-        <Link href="#">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-2 rounded">
-            Login
-          </button>
-        </Link>
-        <Link href="#">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-2 rounded">
-            Register
-          </button>
-        </Link>
-      </div>
-    </nav>
+    <div className="max-w-8xl mx-auto">
+      <nav className="border-gray-200 px-2 sm:px-4 py-1 bg-gray-900">
+        <div className="container flex flex-wrap items-center justify-between mx-auto">
+          <ul className="flex">
+            <li className="py-2 px-4 m-2">
+              <Link href="/trading" className="font-bold text-white text-2xl">
+                거래소
+              </Link>
+            </li>
+            <li className="py-3 px-4 m-2">
+              <Link href="/trading" className="font-bold text-white">
+                투자내역
+              </Link>
+            </li>
+          </ul>
+          <div className="py-2 px-4 m-2">
+            <Link
+              href="/auth/login"
+              className="font-medium text-white hover:text-gray-300 px-8"
+            >
+              로그인
+            </Link>
+            <Link
+              href="/auth/register"
+              className="font-medium text-white hover:text-gray-300"
+            >
+              회원가입
+            </Link>
+          </div>
+        </div>
+      </nav>
+    </div>
   );
 }

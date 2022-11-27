@@ -259,7 +259,7 @@ export default function TradingChart() {
         height: 350,
       },
       title: {
-        text: "CandleStick Chart",
+        text: "",
         align: "left",
       },
       xaxis: {
@@ -274,7 +274,7 @@ export default function TradingChart() {
   };
 
   return (
-    <div>
+    <div className="bg-white m-2">
       <ReactApexChart
         options={state.options}
         series={state.series}
