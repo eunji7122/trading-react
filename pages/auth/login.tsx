@@ -1,8 +1,12 @@
 import Link from "next/link";
-import { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/router";
+import NavigationBar from "../../components/NavigationBar";
+import Footer from "../../components/Footer";
 
 export default function Login() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -25,119 +29,85 @@ export default function Login() {
       })
       .then((response) => {
         console.log("로그인 성공!");
+        router.push("/trading");
       });
   };
 
   return (
-    <>
-      <div className="container mx-auto px-4 h-full">
-        <div className="flex content-center items-center justify-center h-full">
-          <div className="w-full lg:w-4/12 px-4">
-            <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 border-0 mt-12">
-              <div className="rounded-t mb-0 px-6 py-6">
-                <div className="text-center mb-3">
-                  <h6 className="text-blueGray-500 text-sm font-bold">
-                    Sign in with
-                  </h6>
-                </div>
-                <div className="btn-wrapper text-center">
-                  <button
-                    className="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-2 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150"
-                    type="button"
-                  >
-                    <img alt="..." className="w-5 mr-1" src="/img/github.svg" />
-                    Github
-                  </button>
-                  <button
-                    className="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150"
-                    type="button"
-                  >
-                    <img alt="..." className="w-5 mr-1" src="/img/google.svg" />
-                    Google
-                  </button>
-                </div>
-                <hr className="mt-6 border-b-1 border-blueGray-300" />
-              </div>
-              <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
-                <div className="text-blueGray-400 text-center mb-3 font-bold">
-                  <small>Or sign in with credentials</small>
-                </div>
-                <form>
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      placeholder="Email"
-                      value={email}
-                      onChange={handleInputEmail}
-                    />
-                  </div>
-
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Password
-                    </label>
-                    <input
-                      type="password"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      placeholder="Password"
-                      value={password}
-                      onChange={handleInputPassword}
-                    />
-                  </div>
-                  <div>
-                    <label className="inline-flex items-center cursor-pointer">
-                      <input
-                        id="customCheckLogin"
-                        type="checkbox"
-                        className="form-checkbox border-0 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150"
-                      />
-                      <span className="ml-2 text-sm font-semibold text-blueGray-600">
-                        Remember me
-                      </span>
-                    </label>
-                  </div>
-
-                  <div className="text-center mt-6">
-                    <button
-                      className="bg-blueGray-800 text-black active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-                      type="button"
-                      onClick={onClickLogin}
-                    >
-                      Sign In
-                    </button>
-                  </div>
-                </form>
-              </div>
+    <div className="bg-gray-200">
+      <NavigationBar />
+      <section className="h-screen">
+        <div className="flex justify-center items-center flex-wrap g-6 text-gray-800">
+          <div className="py-40">
+            <header className="py-8 text-center">
+              <p className="font-bold text-3xl">로그인</p>
+            </header>
+            <div className="mb-6">
+              <input
+                type="text"
+                className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                placeholder="이메일"
+                value={email}
+                onChange={handleInputEmail}
+              />
             </div>
-            <div className="flex flex-wrap mt-6 relative">
-              <div className="w-1/2">
-                <a
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                  className="text-blueGray-200"
-                >
-                  <small>Forgot password?</small>
-                </a>
-              </div>
-              <div className="w-1/2 text-right">
-                <Link href="/auth/register" className="text-blueGray-200">
-                  <small>Create new account</small>
-                </Link>
-              </div>
+
+            <div className="mb-6">
+              <input
+                type="password"
+                className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                placeholder="비밀번호"
+                value={password}
+                onChange={handleInputPassword}
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="inline-block px-7 py-3 bg-gray-600 text-white font-medium text-lg leading-snug uppercase rounded shadow-md hover:bg-gray-700 hover:shadow-lg transition duration-150 ease-in-out w-full"
+              onClick={onClickLogin}
+            >
+              로그인
+            </button>
+
+            <div className="py-7 px-16 flex justify-between items-center">
+              <ul className="flex flex-wrap items-center text-gray-600 text-sm">
+                <li>
+                  <Link href="/#">아이디 찾기</Link>
+                </li>
+                <p className="text-xs text-gray-400 px-5">|</p>
+                <li>
+                  <Link href="/#">비밀번호 찾기</Link>
+                </li>
+                <p className="text-xs text-gray-400 px-5">|</p>
+                <li>
+                  <Link href="/auth/register">회원가입</Link>
+                </li>
+              </ul>
+            </div>
+
+            <div className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
+              <p className="text-center font-semibold mx-4 mb-0">또는</p>
+            </div>
+
+            <div>
+              <ul className="flex flex-wrap items-center pl-36">
+                <li>
+                  <a href="#!">
+                    <img className="w-14 mr-3" src="/img/icon-google.png" />
+                  </a>
+                </li>
+                <li>
+                  <a href="#!">
+                    <img className="w-12 mr-1" src="/img/icon-naver.png" />
+                  </a>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
-      </div>
-    </>
+      </section>
+      <Footer />
+    </div>
   );
 }
