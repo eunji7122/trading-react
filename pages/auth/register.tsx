@@ -1,13 +1,15 @@
-import Link from "next/link";
 import React, { ChangeEvent, useState } from "react";
 import axios from "axios";
 import NavigationBar from "../../components/NavigationBar";
 import Footer from "../../components/Footer";
+import { useRouter } from "next/router";
 
 export default function Register() {
-  const [username, setUsername] = useState("");
+  const router = useRouter();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
 
   const handleInputUsername = (e: ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
@@ -34,6 +36,7 @@ export default function Register() {
       })
       .then((response) => {
         console.log("회원가입 성공");
+        router.push("/auth/login");
       });
   };
 
@@ -52,6 +55,7 @@ export default function Register() {
                 className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 placeholder="이메일"
                 value={email}
+                onChange={handleInputEmail}
               />
             </div>
 
@@ -61,6 +65,7 @@ export default function Register() {
                 className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 placeholder="비밀번호"
                 value={password}
+                onChange={handleInputPassword}
               />
             </div>
 
@@ -70,12 +75,14 @@ export default function Register() {
                 className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 placeholder="이름"
                 value={username}
+                onChange={handleInputUsername}
               />
             </div>
 
             <button
-              type="submit"
+              type="button"
               className="inline-block px-7 py-3 bg-gray-600 text-white font-medium text-lg leading-snug uppercase rounded shadow-md hover:bg-gray-700 hover:shadow-lg transition duration-150 ease-in-out w-full"
+              onClick={onClickSignup}
             >
               회원가입
             </button>
