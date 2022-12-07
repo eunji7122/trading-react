@@ -13,7 +13,7 @@ export default function NavigationBar() {
               </Link>
             </li>
             <li className="py-3 px-4 m-2">
-              <Link href="/trading" className="font-bold text-white">
+              <Link href="/investments" className="font-bold text-white">
                 투자내역
               </Link>
             </li>

@@ -1,6 +1,6 @@
 export default function TradingCoinTable() {
   return (
-    <div className="overflow-x-auto relative bg-white mr-2 mt-2 mb-2 h-316">
+    <div className="overflow-auto relative bg-white mr-2 mt-2 mb-2 h-316">
       <div className="flex justify-center border-b">
         <div className="w-11/12">
           <input
