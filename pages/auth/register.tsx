@@ -24,10 +24,6 @@ export default function Register() {
   };
 
   const onClickSignup = () => {
-    console.log("Username: ", username);
-    console.log("ID: ", email);
-    console.log("Password: ", password);
-
     axios
       .post("http://localhost:8080/auth/signup", {
         email: email,
@@ -35,7 +31,6 @@ export default function Register() {
         username: username,
       })
       .then((response) => {
-        console.log("회원가입 성공");
         router.push("/auth/login");
       });
   };

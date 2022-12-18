@@ -4,11 +4,15 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import NavigationBar from "../../components/NavigationBar";
 import Footer from "../../components/Footer";
+import { useAppDispatch, useAppSelector } from "../../app/store";
+import { setToken } from "../../features/authSlice";
 
 export default function Login() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const dispatch = useAppDispatch();
 
   const handleInputEmail = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -19,16 +23,17 @@ export default function Login() {
   };
 
   const onClickLogin = () => {
-    console.log("ID: ", email);
-    console.log("Password: ", password);
-
     axios
       .post("http://localhost:8080/auth/login", {
         email: email,
         password: password,
       })
       .then((response) => {
-        console.log("로그인 성공!");
+        dispatch(
+          setToken({
+            token: response.data.accessToken,
+          })
+        );
         router.push("/trading");
       });
   };
