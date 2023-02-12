@@ -1,4 +1,19 @@
+import { useCallback, useEffect, useState } from "react";
+import axios from "axios";
+import { Transaction } from "../../model/transaction";
+
 export default function TradingConclusionTable() {
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+
+  const loadTransactions = useCallback(async () => {
+    const response = await axios.get<Transaction[]>("/transactions");
+    setTransactions(response.data);
+  }, []);
+
+  useEffect(() => {
+    loadTransactions().then();
+  }, []);
+
   return (
     <div className="overflow-x-auto relative bg-white mr-2 ml-2 mb-2 h-86">
       <div className="border-b">
@@ -23,36 +38,14 @@ export default function TradingConclusionTable() {
             </tr>
           </thead>
           <tbody>
-            <tr className="bg-white border-b">
-              <td className="py-4 px-6">11/27 00:49</td>
-              <td className="py-4 px-6">28,000,000</td>
-              <td className="py-4 px-6">0.001</td>
-              <td className="py-4 px-6">1,000,000</td>
-            </tr>
-            <tr className="bg-white border-b">
-              <td className="py-4 px-6">11/27 00:49</td>
-              <td className="py-4 px-6">28,000,000</td>
-              <td className="py-4 px-6">0.001</td>
-              <td className="py-4 px-6">1,000,000</td>
-            </tr>
-            <tr className="bg-white border-b">
-              <td className="py-4 px-6">11/27 00:49</td>
-              <td className="py-4 px-6">28,000,000</td>
-              <td className="py-4 px-6">0.001</td>
-              <td className="py-4 px-6">1,000,000</td>
-            </tr>
-            <tr className="bg-white border-b">
-              <td className="py-4 px-6">11/27 00:49</td>
-              <td className="py-4 px-6">28,000,000</td>
-              <td className="py-4 px-6">0.001</td>
-              <td className="py-4 px-6">1,000,000</td>
-            </tr>
-            <tr className="bg-white border-b">
-              <td className="py-4 px-6">11/27 00:49</td>
-              <td className="py-4 px-6">28,000,000</td>
-              <td className="py-4 px-6">0.001</td>
-              <td className="py-4 px-6">1,000,000</td>
-            </tr>
+            {transactions.map((transaction) => (
+              <tr key={transaction.id} className="bg-white border-b">
+                <td className="py-4 px-6">11/27 00:49</td>
+                <td className="py-4 px-6">{transaction.price}</td>
+                <td className="py-4 px-6">{transaction.amount}</td>
+                <td className="py-4 px-6">1,000,000</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

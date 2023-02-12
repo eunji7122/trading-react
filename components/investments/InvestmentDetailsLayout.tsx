@@ -14,7 +14,7 @@ export default function InvestmentDetailsLayout() {
   const [isNotSignedDetailsTabShown, setIsNotSignedDetailsTabShown] =
     useState(false);
 
-  const tabClick = (event) => {
+  const tabClick = (event: any) => {
     if (event.target.innerText == holdings) {
       setIsHoldingsTabShown(true);
       setIsTransactionDetailsTabShown(false);

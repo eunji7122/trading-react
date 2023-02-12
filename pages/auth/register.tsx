@@ -25,7 +25,7 @@ export default function Register() {
 
   const onClickSignup = () => {
     axios
-      .post("http://localhost:8080/auth/signup", {
+      .post("/members", {
         email: email,
         password: password,
         username: username,

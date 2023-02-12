@@ -1,6 +1,12 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
+import axios from "axios";
+import { TradingPair } from "../../model/trading-pair";
 
-export default function TradingOrder() {
+interface Props {
+  tradingPair: TradingPair;
+}
+
+export default function TradingOrder({ tradingPair }: Props) {
   const [isBuyTabShown, setIsBuyTabShown] = useState(true);
   const [isSellTabShown, setIsSellTabShown] = useState(false);
 
@@ -13,6 +19,27 @@ export default function TradingOrder() {
   const sellTabClick = () => {
     setIsBuyTabShown(false);
     setIsSellTabShown(true);
+  };
+
+  const [price, setPrice] = useState(0);
+  const [amount, setAmount] = useState(0);
+
+  const handleInputPrice = (e: ChangeEvent<HTMLInputElement>) => {
+    setPrice(Number(e.target.value));
+  };
+
+  const handleInputAmount = (e: ChangeEvent<HTMLInputElement>) => {
+    setAmount(Number(e.target.value));
+  };
+
+  const order = async () => {
+    const type = isBuyTabShown ? "BUY" : "SELL";
+    const response = await axios.post("/orders", {
+      tradingPairId: tradingPair.id,
+      type: type,
+      price: price,
+      amount: amount,
+    });
   };
 
   return (
@@ -107,6 +134,8 @@ export default function TradingOrder() {
                 type="number"
                 className="border border-solid border-gray-300 focus:border-blue-600 focus:border-2 focus:outline-none
               px-3 w-full text-gray-700 font-bold h-8"
+                value={price.toString()}
+                onChange={handleInputPrice}
               />
             </div>
             <div className="flex items-center py-2 px-2 m-2 h-10">
@@ -114,6 +143,8 @@ export default function TradingOrder() {
                 type="number"
                 className="border border-solid border-gray-300 focus:border-blue-600 focus:border-2 focus:outline-none
               px-3 w-full text-gray-700 h-8"
+                value={amount.toString()}
+                onChange={handleInputAmount}
               />
             </div>
             <div className="flex items-center py-2 px-2 m-2 h-10">
@@ -127,6 +158,7 @@ export default function TradingOrder() {
               <button
                 type="button"
                 className="w-full h-8 bg-red-600 text-white hover:bg-red-700"
+                onClick={order}
               >
                 매수
               </button>
@@ -214,6 +246,7 @@ export default function TradingOrder() {
               <button
                 type="button"
                 className="w-full h-8 bg-blue-600 text-white hover:bg-blue-700"
+                onClick={order}
               >
                 매도
               </button>

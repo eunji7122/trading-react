@@ -1,4 +1,29 @@
-export default function TradingCoinTable() {
+import axios from "axios";
+import { useCallback, useEffect, useState } from "react";
+import { TradingPair } from "../../model/trading-pair";
+
+interface Props {
+  setTradingPair?: (tradingPair: TradingPair) => void;
+}
+
+export default function TradingCoinTable({ setTradingPair }: Props) {
+  const [tradingPairs, setTradingPairs] = useState<TradingPair[]>([]);
+  const loadTradingPairs = useCallback(async () => {
+    const response = await axios.get<TradingPair[]>("/tradingPairs");
+    setTradingPairs(response.data);
+    if (setTradingPair) setTradingPair(response.data[0]);
+  }, [setTradingPair]);
+  useEffect(() => {
+    loadTradingPairs().then();
+  }, []);
+
+  const onClickPair = useCallback(
+    (tradingPair: TradingPair) => {
+      if (setTradingPair) setTradingPair(tradingPair);
+    },
+    [setTradingPair]
+  );
+
   return (
     <div className="overflow-auto relative bg-white mr-2 mt-2 mb-2 h-316">
       <div className="flex justify-center border-b">
@@ -49,193 +74,23 @@ export default function TradingCoinTable() {
           </tr>
         </thead>
         <tbody className="overflow-y-scroll">
-          <tr className="bg-white border-b">
-            <td
-              scope="row"
-              className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
+          {tradingPairs.map((tradingPair) => (
+            <tr
+              key={tradingPair.id}
+              className="bg-white border-b"
+              onClick={() => onClickPair(tradingPair)}
             >
-              비트코인
-            </td>
-            <td className="py-4 px-6">28000000</td>
-            <td className="py-4 px-6">+10%</td>
-            <td className="py-4 px-6">100,000만</td>
-          </tr>
-          <tr className="bg-white border-b">
-            <td
-              scope="row"
-              className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
-            >
-              이더리움
-            </td>
-            <td className="py-4 px-6">28000000</td>
-            <td className="py-4 px-6">+10%</td>
-            <td className="py-4 px-6">100,000만</td>
-          </tr>
-          <tr className="bg-white border-b">
-            <td
-              scope="row"
-              className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
-            >
-              승희
-            </td>
-            <td className="py-4 px-6">1</td>
-            <td className="py-4 px-6">+10%</td>
-            <td className="py-4 px-6">100,000만</td>
-          </tr>
-          <tr className="bg-white border-b">
-            <td
-              scope="row"
-              className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
-            >
-              승희
-            </td>
-            <td className="py-4 px-6">1</td>
-            <td className="py-4 px-6">+10%</td>
-            <td className="py-4 px-6">100,000만</td>
-          </tr>
-          <tr className="bg-white border-b">
-            <td
-              scope="row"
-              className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
-            >
-              승희
-            </td>
-            <td className="py-4 px-6">1</td>
-            <td className="py-4 px-6">+10%</td>
-            <td className="py-4 px-6">100,000만</td>
-          </tr>
-          <tr className="bg-white border-b">
-            <td
-              scope="row"
-              className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
-            >
-              승희
-            </td>
-            <td className="py-4 px-6">1</td>
-            <td className="py-4 px-6">+10%</td>
-            <td className="py-4 px-6">100,000만</td>
-          </tr>
-          <tr className="bg-white border-b">
-            <td
-              scope="row"
-              className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
-            >
-              승희
-            </td>
-            <td className="py-4 px-6">1</td>
-            <td className="py-4 px-6">+10%</td>
-            <td className="py-4 px-6">100,000만</td>
-          </tr>
-          <tr className="bg-white border-b">
-            <td
-              scope="row"
-              className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
-            >
-              승희
-            </td>
-            <td className="py-4 px-6">1</td>
-            <td className="py-4 px-6">+10%</td>
-            <td className="py-4 px-6">100,000만</td>
-          </tr>
-          <tr className="bg-white border-b">
-            <td
-              scope="row"
-              className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
-            >
-              승희
-            </td>
-            <td className="py-4 px-6">1</td>
-            <td className="py-4 px-6">+10%</td>
-            <td className="py-4 px-6">100,000만</td>
-          </tr>
-          <tr className="bg-white border-b">
-            <td
-              scope="row"
-              className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
-            >
-              승희
-            </td>
-            <td className="py-4 px-6">1</td>
-            <td className="py-4 px-6">+10%</td>
-            <td className="py-4 px-6">100,000만</td>
-          </tr>
-          <tr className="bg-white border-b">
-            <td
-              scope="row"
-              className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
-            >
-              승희
-            </td>
-            <td className="py-4 px-6">1</td>
-            <td className="py-4 px-6">+10%</td>
-            <td className="py-4 px-6">100,000만</td>
-          </tr>
-          <tr className="bg-white border-b">
-            <td
-              scope="row"
-              className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
-            >
-              승희
-            </td>
-            <td className="py-4 px-6">1</td>
-            <td className="py-4 px-6">+10%</td>
-            <td className="py-4 px-6">100,000만</td>
-          </tr>
-          <tr className="bg-white border-b">
-            <td
-              scope="row"
-              className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
-            >
-              승희
-            </td>
-            <td className="py-4 px-6">1</td>
-            <td className="py-4 px-6">+10%</td>
-            <td className="py-4 px-6">100,000만</td>
-          </tr>
-          <tr className="bg-white border-b">
-            <td
-              scope="row"
-              className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
-            >
-              승희
-            </td>
-            <td className="py-4 px-6">1</td>
-            <td className="py-4 px-6">+10%</td>
-            <td className="py-4 px-6">100,000만</td>
-          </tr>
-          <tr className="bg-white border-b">
-            <td
-              scope="row"
-              className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
-            >
-              승희
-            </td>
-            <td className="py-4 px-6">1</td>
-            <td className="py-4 px-6">+10%</td>
-            <td className="py-4 px-6">100,000만</td>
-          </tr>
-          <tr className="bg-white border-b">
-            <td
-              scope="row"
-              className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
-            >
-              승희
-            </td>
-            <td className="py-4 px-6">1</td>
-            <td className="py-4 px-6">+10%</td>
-            <td className="py-4 px-6">100,000만</td>
-          </tr>
-          <tr className="bg-white border-b">
-            <td
-              scope="row"
-              className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
-            >
-              승희
-            </td>
-            <td className="py-4 px-6">1</td>
-            <td className="py-4 px-6">+10%</td>
-            <td className="py-4 px-6">100,000만</td>
-          </tr>
+              <td
+                scope="row"
+                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
+              >
+                {tradingPair.baseAsset.name}
+              </td>
+              <td className="py-4 px-6">{tradingPair.lastPrice}</td>
+              <td className="py-4 px-6">+10%</td>
+              <td className="py-4 px-6">100,000만</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
