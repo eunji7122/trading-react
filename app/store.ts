@@ -3,7 +3,7 @@ import storage from "redux-persist/lib/storage";
 import authReducer from "../features/authSlice";
 import { persistReducer } from "redux-persist";
 import thunk from "redux-thunk";
-import { useDispatch, useSelector } from "react-redux";
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 const reducers = combineReducers({
   auth: authReducer,
@@ -22,5 +22,6 @@ export const store = configureStore({
   middleware: [thunk],
 });
 
+export type RootState = ReturnType<typeof store.getState>;
 export const useAppDispatch = () => useDispatch();
-export const useAppSelector = useSelector;
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

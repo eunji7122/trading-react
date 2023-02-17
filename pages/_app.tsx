@@ -6,6 +6,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
 import { useEffect } from "react";
 import axios from "axios";
+import RouteGuard from "../components/RouteGuard";
 export let persistor = persistStore(store);
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -27,7 +28,9 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <Component {...pageProps} />
+        <RouteGuard>
+          <Component {...pageProps} />
+        </RouteGuard>
       </PersistGate>
     </Provider>
   );

@@ -2,19 +2,10 @@ import React from "react";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "../features/authSlice";
-import { useRouter } from "next/router";
 
 export default function NavigationBar() {
   const dispatch = useDispatch();
   const token = useSelector((state: any) => state.auth.token);
-  const router = useRouter();
-
-  const onClickInvestments = () => {
-    if (!token) {
-      alert("로그인이 필요한 페이지 입니다.");
-      router.push("/auth/login");
-    }
-  };
 
   return (
     <div className="max-w-8xl mx-auto">
@@ -27,11 +18,7 @@ export default function NavigationBar() {
               </Link>
             </li>
             <li className="py-3 px-4 m-2">
-              <Link
-                href="/investments"
-                onClick={onClickInvestments}
-                className="font-bold text-white"
-              >
+              <Link href="/investments" className="font-bold text-white">
                 투자내역
               </Link>
             </li>
