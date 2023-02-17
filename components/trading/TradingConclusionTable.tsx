@@ -40,10 +40,12 @@ export default function TradingConclusionTable() {
           <tbody>
             {transactions.map((transaction) => (
               <tr key={transaction.id} className="bg-white border-b">
-                <td className="py-4 px-6">11/27 00:49</td>
+                <td className="py-4 px-6">{transaction.updatedAt}</td>
                 <td className="py-4 px-6">{transaction.price}</td>
                 <td className="py-4 px-6">{transaction.amount}</td>
-                <td className="py-4 px-6">1,000,000</td>
+                <td className="py-4 px-6">
+                  {transaction.amount * transaction.price}
+                </td>
               </tr>
             ))}
           </tbody>

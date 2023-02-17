@@ -5,4 +5,6 @@ export interface TradingPair {
   baseAsset: Asset;
   quoteAsset: Asset;
   lastPrice: number;
+  changeRate: number;
+  tradingValue: number;
 }

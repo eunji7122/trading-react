@@ -8,11 +8,13 @@ interface Props {
 
 export default function TradingCoinTable({ setTradingPair }: Props) {
   const [tradingPairs, setTradingPairs] = useState<TradingPair[]>([]);
+
   const loadTradingPairs = useCallback(async () => {
     const response = await axios.get<TradingPair[]>("/tradingPairs");
     setTradingPairs(response.data);
     if (setTradingPair) setTradingPair(response.data[0]);
   }, [setTradingPair]);
+
   useEffect(() => {
     loadTradingPairs().then();
   }, []);
@@ -85,10 +87,14 @@ export default function TradingCoinTable({ setTradingPair }: Props) {
                 className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
               >
                 {tradingPair.baseAsset.name}
+                <br />
+                <p className="text-xs text-gray-400">
+                  {tradingPair.baseAsset.symbol}/{tradingPair.quoteAsset.symbol}
+                </p>
               </td>
               <td className="py-4 px-6">{tradingPair.lastPrice}</td>
-              <td className="py-4 px-6">+10%</td>
-              <td className="py-4 px-6">100,000만</td>
+              <td className="py-4 px-6">{tradingPair.changeRate}%</td>
+              <td className="py-4 px-6">{tradingPair.tradingValue}</td>
             </tr>
           ))}
         </tbody>

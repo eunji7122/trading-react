@@ -5,4 +5,5 @@ export interface Transaction {
   tradingPair: TradingPair;
   price: number;
   amount: number;
+  updatedAt: string;
 }

@@ -1,8 +1,23 @@
 // 보유자산 탭
 import ReactApexChart from "react-apexcharts";
 import dynamic from "next/dynamic";
+import { useCallback, useEffect, useState } from "react";
+import axios from "axios";
+import { MemberAsset } from "../../model/member-asset";
 
 export default function Holdings() {
+  const [memberAssets, setMemberAssets] = useState<MemberAsset[]>([]);
+
+  const loadMemberAssets = useCallback(async () => {
+    const response = await axios.get<MemberAsset[]>("/memberAssets");
+    setMemberAssets(response.data);
+    console.log(memberAssets.length);
+  }, []);
+
+  useEffect(() => {
+    loadMemberAssets().then();
+  }, []);
+
   const ReactApexChart = dynamic(() => import("react-apexcharts"), {
     ssr: false,
   });
@@ -102,33 +117,44 @@ export default function Holdings() {
                 <th className="p-2 w-1/6">평가손익</th>
               </tr>
             </thead>
-            <tbody className="flex flex-col items-center justify-between overflow-y-scroll w-full text-sm h-229">
-              <tr className="flex w-full mb-4 border-b text-gray-700">
-                <td className="p-2 w-1/6 text-center">
-                  <p>비트코인</p>
-                  <p className="text-xs text-gray-500">BTC</p>
-                </td>
-                <td className="p-2 w-1/6 text-right">
-                  0.001<i className="text-xs text-gray-400">BTC</i>
-                </td>
-                <td className="p-2 w-1/6 text-right">
-                  28,000,000<i className="text-xs text-gray-400">KRW</i>
-                </td>
-                <td className="p-2 w-1/6 text-right">
-                  1,000,000<i className="text-xs text-gray-400">KRW</i>
-                </td>
-                <td className="p-2 w-1/6 text-right">
-                  1,000,000<i className="text-xs text-gray-400">KRW</i>
-                </td>
-                <td className="px-2 py-1.5 w-1/6 text-right">
-                  <p>
-                    0<i className="text-xs text-gray-400">%</i>
-                  </p>
-                  <p>
-                    0<i className="text-xs text-gray-400">KRW</i>
-                  </p>
-                </td>
-              </tr>
+            <tbody className="flex flex-col  justify-between overflow-y-scroll w-full text-sm">
+              {memberAssets.map((memberAsset) => (
+                <tr
+                  key={memberAsset.id}
+                  className="flex w-full mb-4 border-b text-gray-700"
+                >
+                  <td className="p-2 w-1/6 text-center">
+                    <p>{memberAsset.asset.name}</p>
+                    <p className="text-xs text-gray-500">
+                      {memberAsset.asset.symbol}
+                    </p>
+                  </td>
+                  <td className="p-2 w-1/6 text-right">
+                    {memberAsset.amount}
+                    <i className="text-xs text-gray-400">
+                      {memberAsset.asset.symbol}
+                    </i>
+                  </td>
+                  <td className="p-2 w-1/6 text-right">
+                    {memberAsset.averagePurchasedPrice}
+                    <i className="text-xs text-gray-400">KRW</i>
+                  </td>
+                  <td className="p-2 w-1/6 text-right">
+                    1,000,000<i className="text-xs text-gray-400">KRW</i>
+                  </td>
+                  <td className="p-2 w-1/6 text-right">
+                    1,000,000<i className="text-xs text-gray-400">KRW</i>
+                  </td>
+                  <td className="px-2 py-1.5 w-1/6 text-right">
+                    <p>
+                      0<i className="text-xs text-gray-400">%</i>
+                    </p>
+                    <p>
+                      0<i className="text-xs text-gray-400">KRW</i>
+                    </p>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
