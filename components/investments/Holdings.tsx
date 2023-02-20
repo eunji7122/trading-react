@@ -11,7 +11,6 @@ export default function Holdings() {
   const loadMemberAssets = useCallback(async () => {
     const response = await axios.get<MemberAsset[]>("/memberAssets");
     setMemberAssets(response.data);
-    console.log(memberAssets.length);
   }, []);
 
   useEffect(() => {

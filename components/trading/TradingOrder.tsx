@@ -23,13 +23,16 @@ export default function TradingOrder({ tradingPair }: Props) {
 
   const [price, setPrice] = useState(0);
   const [amount, setAmount] = useState(0);
+  const [totalAmount, setTotalAmount] = useState(0);
 
   const handleInputPrice = (e: ChangeEvent<HTMLInputElement>) => {
     setPrice(Number(e.target.value));
+    setTotalAmount(price * amount);
   };
 
   const handleInputAmount = (e: ChangeEvent<HTMLInputElement>) => {
     setAmount(Number(e.target.value));
+    setTotalAmount(price * amount);
   };
 
   const order = async () => {
@@ -152,6 +155,8 @@ export default function TradingOrder({ tradingPair }: Props) {
                 type="number"
                 className="border border-solid border-gray-300 focus:border-blue-600 focus:border-2 focus:outline-none
               px-3 w-full text-gray-700 h-8"
+                value={totalAmount.toString()}
+                onChange={() => {}}
               />
             </div>
             <div className="px-2 m-2 pt-14">

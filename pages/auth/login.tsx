@@ -37,18 +37,16 @@ export default function Login() {
   };
 
   const onSubmit = (data: any) => {
-    console.log("1234");
     router.push("/trading");
   };
 
   const onClickLogin = async () => {
     try {
-      console.log("aaa");
       const response = await axios.post("/auth/token", {
         email: email,
         password: password,
       });
-      console.log("로그인 성공");
+
       dispatch(
         setToken({
           token: response.data.accessToken,
@@ -77,7 +75,7 @@ export default function Login() {
   return (
     <div className="bg-gray-200">
       <NavigationBar />
-      <section className="h-screen">
+      <section className="">
         <div className="flex justify-center items-center flex-wrap g-6 text-gray-800">
           <div className="py-40">
             <header className="py-8 text-center">

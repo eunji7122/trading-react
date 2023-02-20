@@ -16,7 +16,7 @@ export default function TradingChartHeader({ tradingPair }: Props) {
       <div className="flex">
         <div className="w-1/2 py-1 px-2 m-1">
           <p className="font-bold text-3xl">{tradingPair?.lastPrice}</p>
-          <p className="text-sm">전일대비 +0.01%</p>
+          <p className="text-sm">전일대비 {tradingPair.changeRate}%</p>
         </div>
         <div className="w-1/2 py-5 flex text-sm">
           <div className="flex w-1/2 justify-between px-5">

@@ -17,7 +17,7 @@ export default function TradingLayout() {
             <>
               <div>
                 <TradingChartHeader tradingPair={tradingPair} />
-                <TradingChart />
+                <TradingChart tradingPair={tradingPair} />
               </div>
               <div className="flex">
                 <div className="w-1/2">

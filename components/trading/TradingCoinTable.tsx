@@ -88,13 +88,19 @@ export default function TradingCoinTable({ setTradingPair }: Props) {
               >
                 {tradingPair.baseAsset.name}
                 <br />
-                <p className="text-xs text-gray-400">
+                <p className="text-xs text-gray-400 font-normal">
                   {tradingPair.baseAsset.symbol}/{tradingPair.quoteAsset.symbol}
                 </p>
               </td>
-              <td className="py-4 px-6">{tradingPair.lastPrice}</td>
-              <td className="py-4 px-6">{tradingPair.changeRate}%</td>
-              <td className="py-4 px-6">{tradingPair.tradingValue}</td>
+              <td className="py-4 px-6 text-gray-600">
+                {tradingPair.lastPrice}
+              </td>
+              <td className="py-4 px-6 text-gray-600">
+                {tradingPair.changeRate}%
+              </td>
+              <td className="py-4 px-7 text-gray-600">
+                {tradingPair.tradingValue}
+              </td>
             </tr>
           ))}
         </tbody>
