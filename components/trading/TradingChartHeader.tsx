@@ -25,8 +25,12 @@ export default function TradingChartHeader({ tradingPair }: Props) {
               <p>저가</p>
             </div>
             <div className="h-1/2">
-              <p className="text-red-600 font-bold">29,000,000</p>
-              <p className="text-blue-600 font-bold">27,000,000</p>
+              <p className="text-red-600 font-bold">
+                {tradingPair.highestPrice}
+              </p>
+              <p className="text-blue-600 font-bold">
+                {tradingPair.lowestPrice}
+              </p>
             </div>
           </div>
           <div className="flex w-1/2 justify-between pr-5">
@@ -35,8 +39,8 @@ export default function TradingChartHeader({ tradingPair }: Props) {
               <p>거래대금</p>
             </div>
             <div className="h-1/2">
-              <p>1,000</p>
-              <p>100,000,000</p>
+              <p>{tradingPair.tradingAmount}</p>
+              <p>{tradingPair.tradingValue}</p>
             </div>
           </div>
         </div>
