@@ -4,17 +4,28 @@ import dynamic from "next/dynamic";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { MemberAsset } from "../../model/member-asset";
+import { MemberKrwAsset } from "../../model/MemberKrwAsset";
 
 export default function Holdings() {
   const [memberAssets, setMemberAssets] = useState<MemberAsset[]>([]);
+  const [memberKrwAssets, setMemberKrwAssets] = useState<MemberKrwAsset>();
 
   const loadMemberAssets = useCallback(async () => {
     const response = await axios.get<MemberAsset[]>("/memberAssets");
     setMemberAssets(response.data);
   }, []);
 
+  const loadMemberKrwAsset = useCallback(async () => {
+    const response = await axios.get<MemberKrwAsset>("/memberAssets/krw");
+    setMemberKrwAssets(response.data);
+  }, []);
+
   useEffect(() => {
     loadMemberAssets().then();
+  }, []);
+
+  useEffect(() => {
+    loadMemberKrwAsset().then();
   }, []);
 
   const ReactApexChart = dynamic(() => import("react-apexcharts"), {
@@ -50,13 +61,15 @@ export default function Holdings() {
             <div className="w-1/2 flex justify-between py-4 px-6 m-4">
               <p className="text-gray-600 text-sm py-1">보유 KRW</p>
               <p className="text-gray-600 text-lg">
-                0<i className="text-gray-500 text-xs">KRW</i>
+                {memberKrwAssets?.krwAmount}&nbsp;
+                <i className="text-gray-500 text-xs">KRW</i>
               </p>
             </div>
             <div className="w-1/2 flex justify-between py-4 px-6 m-4">
               <p className="text-gray-600 text-sm py-1">총 보유 자산</p>
               <p className="text-gray-600 text-lg">
-                1,000,000<i className="text-gray-500 text-xs">KRW</i>
+                {memberKrwAssets?.totalAmount}&nbsp;
+                <i className="text-gray-500 text-xs">KRW</i>
               </p>
             </div>
           </div>
@@ -65,13 +78,15 @@ export default function Holdings() {
               <div className="flex justify-between pb-2">
                 <p className="text-gray-600 text-sm py-1">총매수금액</p>
                 <p className="text-gray-600 text-lg">
-                  0<i className="text-gray-500 text-xs">KRW</i>
+                  {memberKrwAssets?.totalPurchasedPrice}&nbsp;
+                  <i className="text-gray-500 text-xs">KRW</i>
                 </p>
               </div>
               <div className="flex justify-between">
                 <p className="text-gray-600 text-sm py-1">총평가금액</p>
                 <p className="text-gray-600 text-lg">
-                  0<i className="text-gray-500 text-xs">KRW</i>
+                  {memberKrwAssets?.totalEvaluationPrice}&nbsp;
+                  <i className="text-gray-500 text-xs">KRW</i>
                 </p>
               </div>
             </div>
@@ -79,13 +94,15 @@ export default function Holdings() {
               <div className="flex justify-between pb-2">
                 <p className="text-gray-600 text-sm py-1">총평가손익</p>
                 <p className="text-gray-600 text-lg">
-                  0<i className="text-gray-500 text-xs">KRW</i>
+                  {memberKrwAssets?.totalEvaluationProfitAndLoss}&nbsp;
+                  <i className="text-gray-500 text-xs">KRW</i>
                 </p>
               </div>
               <div className="flex justify-between">
                 <p className="text-gray-600 text-sm py-1">총평가수익률</p>
                 <p className="text-gray-600 text-lg">
-                  0<i className="text-gray-500 text-xs">KRW</i>
+                  {memberKrwAssets?.totalEvaluationRate}&nbsp;
+                  <i className="text-gray-500 text-xs">%</i>
                 </p>
               </div>
             </div>

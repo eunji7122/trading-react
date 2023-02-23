@@ -57,7 +57,7 @@ export default function TradingChart({ tradingPair }: Props) {
       params: {
         tradingPairId: 1,
         from: "2023-02-05 00:00:00",
-        to: "2023-02-19 00:00:00",
+        to: "2023-02-24 00:00:00",
       },
     });
     setCandleList(response.data);
