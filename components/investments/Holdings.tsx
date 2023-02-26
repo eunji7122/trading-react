@@ -11,8 +11,14 @@ export default function Holdings() {
   const [memberKrwAssets, setMemberKrwAssets] = useState<MemberKrwAsset>();
 
   const loadMemberAssets = useCallback(async () => {
-    const response = await axios.get<MemberAsset[]>("/memberAssets");
+    const response = await axios.get<MemberAsset[]>("/memberAssets/details");
     setMemberAssets(response.data);
+    memberAssets.map((memberAsset) =>
+      console.log(
+        (memberAsset.evaluationPrice / memberKrwAssets?.totalPurchasedPrice) *
+          100
+      )
+    );
   }, []);
 
   const loadMemberKrwAsset = useCallback(async () => {
@@ -32,7 +38,12 @@ export default function Holdings() {
     ssr: false,
   });
   const state = {
-    series: [44, 55, 41, 17, 15],
+    series: memberAssets.map(
+      (memberAsset) =>
+        (memberAsset.evaluationPrice / memberKrwAssets?.totalPurchasedPrice) *
+        100
+    ),
+    // series: [50, 50],
     options: {
       chart: {
         type: "donut",
@@ -153,20 +164,32 @@ export default function Holdings() {
                   </td>
                   <td className="p-2 w-1/6 text-right">
                     {memberAsset.averagePurchasedPrice}
-                    <i className="text-xs text-gray-400">KRW</i>
+                    <i className="text-xs text-gray-400">
+                      {memberAsset.asset.symbol}
+                    </i>
                   </td>
                   <td className="p-2 w-1/6 text-right">
-                    1,000,000<i className="text-xs text-gray-400">KRW</i>
+                    {memberAsset.purchasedPrice}
+                    <i className="text-xs text-gray-400">
+                      {memberAsset.asset.symbol}
+                    </i>
                   </td>
                   <td className="p-2 w-1/6 text-right">
-                    1,000,000<i className="text-xs text-gray-400">KRW</i>
+                    {memberAsset.evaluationPrice}
+                    <i className="text-xs text-gray-400">
+                      {memberAsset.asset.symbol}
+                    </i>
                   </td>
                   <td className="px-2 py-1.5 w-1/6 text-right">
                     <p>
-                      0<i className="text-xs text-gray-400">%</i>
+                      {memberAsset.evaluationRate}
+                      <i className="text-xs text-gray-400">%</i>
                     </p>
                     <p>
-                      0<i className="text-xs text-gray-400">KRW</i>
+                      {memberAsset.evaluationPrice - memberAsset.purchasedPrice}
+                      <i className="text-xs text-gray-400">
+                        {memberAsset.asset.symbol}
+                      </i>
                     </p>
                   </td>
                 </tr>

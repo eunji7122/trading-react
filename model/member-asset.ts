@@ -5,4 +5,7 @@ export interface MemberAsset {
   asset: Asset;
   amount: number;
   averagePurchasedPrice: number;
+  purchasedPrice: number;
+  evaluationPrice: number;
+  evaluationRate: number;
 }

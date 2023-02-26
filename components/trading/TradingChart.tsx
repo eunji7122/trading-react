@@ -53,11 +53,17 @@ export default function TradingChart({ tradingPair }: Props) {
   );
 
   const loadCandleList = useCallback(async () => {
+    const TIME_ZONE = 9 * 60 * 60 * 1000; // 9시간
+    const d = new Date();
+    const date = new Date(d.getTime() + TIME_ZONE).toISOString().split("T")[0];
+    const time = d.toTimeString().split(" ")[0];
+    const now = date + " " + time;
+
     const response = await axios.get<CandleData[]>("/transactions/candles", {
       params: {
         tradingPairId: 1,
         from: "2023-02-05 00:00:00",
-        to: "2023-02-24 00:00:00",
+        to: now,
       },
     });
     setCandleList(response.data);
