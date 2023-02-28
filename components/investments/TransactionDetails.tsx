@@ -1,12 +1,42 @@
 // 거래내역 탭
 
+import { useCallback, useEffect, useState } from "react";
+import axios from "axios";
+import { Member } from "../../model/member";
+import { Transaction } from "../../model/transaction";
+
 export default function TransactionDetails() {
+  const [member, setMember] = useState<Member>();
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+
+  const loadMember = useCallback(async () => {
+    const response = await axios.get<Member>("/members/me");
+    setMember(response.data);
+  }, []);
+
+  useEffect(() => {
+    loadMember().then();
+  }, []);
+
+  const loadTransactions = useCallback(async () => {
+    const response = await axios.get<Transaction[]>("/transactions/me");
+    setTransactions(response.data);
+  }, []);
+
+  useEffect(() => {
+    loadTransactions().then();
+  }, []);
+
+  const TIME_ZONE = 9 * 60 * 60 * 1000; // 9시간
+  const d = new Date();
+  const date = new Date(d.getTime() + TIME_ZONE).toISOString().split("T")[0];
+
   return (
     <div>
       <div className="flex h-28 border-b border-gray-300">
         <div className="w-1/3 py-2 px-4 m-2">
           <div>
-            <span className="text-xs text-gray-500">기간 2022.12.7</span>
+            <span className="text-xs text-gray-500">기간 {date}</span>
           </div>
           <div>
             <ul className="flex flex-wrap mt-2">
@@ -92,43 +122,53 @@ export default function TransactionDetails() {
             <tr className="flex w-full">
               <th className="p-2 w-1/6">체결시간</th>
               <th className="p-2 w-1/6">코인</th>
+              <th className="p-2 w-1/6">마켓</th>
               <th className="p-2 w-1/6">종류</th>
               <th className="p-2 w-1/6">거래수량</th>
               <th className="p-2 w-1/6">거래단가</th>
               <th className="p-2 w-1/6">거래금액</th>
-              <th className="p-2 w-1/6">수수료</th>
-              <th className="p-2 w-1/6">정산금액</th>
-              <th className="p-2 w-1/6">주문시간</th>
             </tr>
           </thead>
-          <tbody className="flex flex-col items-center justify-between overflow-y-scroll w-full text-sm h-229">
-            <tr className="flex w-full mb-4 border-b text-gray-700 text-xs">
-              <td className="p-2 w-1/6 text-left">
-                <p>2022.12.07</p>
-                <p>20:20</p>
-              </td>
-              <td className="p-2 w-1/6 text-center">BTC </td>
-              <td className="p-2 w-1/6 text-center">매도 </td>
-              <td className="p-2 w-1/6 text-center">
-                0.001<i className="text-xs text-gray-400">BTC</i>
-              </td>
-              <td className="p-2 w-1/6 text-center">
-                28,000,000<i className="text-xs text-gray-400">KRW</i>
-              </td>
-              <td className="px-2 py-1.5 w-1/6 text-center">
-                1,000,000<i className="text-xs text-gray-400">KRW</i>
-              </td>
-              <td className="px-2 py-1.5 w-1/6 text-center">
-                1,000<i className="text-xs text-gray-400">KRW</i>
-              </td>
-              <td className="px-2 py-1.5 w-1/6 text-center">
-                999,000<i className="text-xs text-gray-400">KRW</i>
-              </td>
-              <td className="px-2 py-1.5 w-1/6 text-left">
-                <p>2022.12.07</p>
-                <p>20:20</p>
-              </td>
-            </tr>
+          <tbody className="flex flex-col items-center justify-between overflow-y-scroll w-full text-sm">
+            {transactions.map((transaction) => (
+              <tr
+                key={transaction.id}
+                className="flex w-full mb-4 border-b text-gray-700 text-xs"
+              >
+                <td className="p-2 w-1/6 text-left">
+                  <p>{transaction.updatedAt}</p>
+                </td>
+                <td className="p-2 w-1/6 text-center">
+                  {transaction.tradingPair.baseAsset.symbol}
+                </td>
+                <td className="p-2 w-1/6 text-center">
+                  {transaction.tradingPair.quoteAsset.symbol}
+                </td>
+                <td className="p-2 w-1/6 text-center">
+                  {transaction.buyer.username == member?.username
+                    ? "매수"
+                    : "매도"}
+                </td>
+                <td className="p-2 w-1/6 text-center">
+                  {transaction.amount}&nbsp;
+                  <i className="text-xs text-gray-400">
+                    {transaction.tradingPair.quoteAsset.symbol}
+                  </i>
+                </td>
+                <td className="p-2 w-1/6 text-center">
+                  {transaction.price / transaction.amount}&nbsp;
+                  <i className="text-xs text-gray-400">
+                    {transaction.tradingPair.quoteAsset.symbol}
+                  </i>
+                </td>
+                <td className="px-2 py-1.5 w-1/6 text-center">
+                  {transaction.price}&nbsp;
+                  <i className="text-xs text-gray-400">
+                    {transaction.tradingPair.quoteAsset.symbol}
+                  </i>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

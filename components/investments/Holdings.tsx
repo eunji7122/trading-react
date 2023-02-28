@@ -112,7 +112,10 @@ export default function Holdings() {
               <div className="flex justify-between">
                 <p className="text-gray-600 text-sm py-1">총평가수익률</p>
                 <p className="text-gray-600 text-lg">
-                  {memberKrwAssets?.totalEvaluationRate}&nbsp;
+                  {memberKrwAssets?.totalEvaluationProfitAndLoss > 0
+                    ? memberKrwAssets?.totalEvaluationRate
+                    : -memberKrwAssets?.totalEvaluationRate}
+                  &nbsp;
                   <i className="text-gray-500 text-xs">%</i>
                 </p>
               </div>
@@ -182,7 +185,12 @@ export default function Holdings() {
                   </td>
                   <td className="px-2 py-1.5 w-1/6 text-right">
                     <p>
-                      {memberAsset.evaluationRate}&nbsp;
+                      {memberAsset.evaluationPrice -
+                        memberAsset.purchasedPrice >
+                      0
+                        ? memberAsset.evaluationRate
+                        : -memberAsset.evaluationRate}
+                      &nbsp;
                       <i className="text-xs text-gray-400">%</i>
                     </p>
                     <p>
