@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import { TradingPair } from "../../model/trading-pair";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import axios from "axios";
-import { CandleData } from "../../model/Candle-data";
+import { CandleData } from "../../model/candle-data";
 
 interface Props {
   tradingPair: TradingPair;

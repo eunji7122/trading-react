@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { MemberAsset } from "../../model/member-asset";
-import { MemberKrwAsset } from "../../model/MemberKrwAsset";
+import { MemberKrwAsset } from "../../model/member-krw-asset";
 
 export default function Holdings() {
   const [memberAssets, setMemberAssets] = useState<MemberAsset[]>([]);
@@ -157,36 +157,37 @@ export default function Holdings() {
                     </p>
                   </td>
                   <td className="p-2 w-1/6 text-right">
-                    {memberAsset.amount}
+                    {memberAsset.amount}&nbsp;
                     <i className="text-xs text-gray-400">
                       {memberAsset.asset.symbol}
                     </i>
                   </td>
                   <td className="p-2 w-1/6 text-right">
-                    {memberAsset.averagePurchasedPrice}
+                    {memberAsset.averagePurchasedPrice}&nbsp;
                     <i className="text-xs text-gray-400">
                       {memberAsset.asset.symbol}
                     </i>
                   </td>
                   <td className="p-2 w-1/6 text-right">
-                    {memberAsset.purchasedPrice}
+                    {memberAsset.purchasedPrice}&nbsp;
                     <i className="text-xs text-gray-400">
                       {memberAsset.asset.symbol}
                     </i>
                   </td>
                   <td className="p-2 w-1/6 text-right">
-                    {memberAsset.evaluationPrice}
+                    {memberAsset.evaluationPrice}&nbsp;
                     <i className="text-xs text-gray-400">
                       {memberAsset.asset.symbol}
                     </i>
                   </td>
                   <td className="px-2 py-1.5 w-1/6 text-right">
                     <p>
-                      {memberAsset.evaluationRate}
+                      {memberAsset.evaluationRate}&nbsp;
                       <i className="text-xs text-gray-400">%</i>
                     </p>
                     <p>
                       {memberAsset.evaluationPrice - memberAsset.purchasedPrice}
+                      &nbsp;
                       <i className="text-xs text-gray-400">
                         {memberAsset.asset.symbol}
                       </i>
