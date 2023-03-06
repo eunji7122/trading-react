@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useMemo, useState } from "react";
 import axios from "axios";
 import { TradingPair } from "../../model/trading-pair";
 
@@ -23,16 +23,14 @@ export default function TradingOrder({ tradingPair }: Props) {
 
   const [price, setPrice] = useState(0);
   const [amount, setAmount] = useState(0);
-  const [totalAmount, setTotalAmount] = useState(0);
+  const totalAmount = useMemo(() => price * amount, [price, amount]);
 
   const handleInputPrice = (e: ChangeEvent<HTMLInputElement>) => {
     setPrice(Number(e.target.value));
-    setTotalAmount(price * amount);
   };
 
   const handleInputAmount = (e: ChangeEvent<HTMLInputElement>) => {
     setAmount(Number(e.target.value));
-    setTotalAmount(price * amount);
   };
 
   const order = async () => {
@@ -181,7 +179,7 @@ export default function TradingOrder({ tradingPair }: Props) {
               <p className="text-gray-600">주문가능</p>
             </div>
             <div className="py-2 px-2 m-2">
-              <p className="text-gray-600">매수가격</p>
+              <p className="text-gray-600">매도가격</p>
             </div>
             <div className="py-2 px-2 m-2">
               <p className="text-gray-600">주문수량</p>
@@ -231,6 +229,8 @@ export default function TradingOrder({ tradingPair }: Props) {
                 type="number"
                 className="border border-solid border-gray-300 focus:border-blue-600 focus:border-2 focus:outline-none
               px-3 w-full text-gray-700 font-bold h-8"
+                value={price.toString()}
+                onChange={handleInputPrice}
               />
             </div>
             <div className="flex items-center py-2 px-2 m-2 h-10">
@@ -238,6 +238,8 @@ export default function TradingOrder({ tradingPair }: Props) {
                 type="number"
                 className="border border-solid border-gray-300 focus:border-blue-600 focus:border-2 focus:outline-none
               px-3 w-full text-gray-700 h-8"
+                value={amount.toString()}
+                onChange={handleInputAmount}
               />
             </div>
             <div className="flex items-center py-2 px-2 m-2 h-10">
@@ -245,6 +247,8 @@ export default function TradingOrder({ tradingPair }: Props) {
                 type="number"
                 className="border border-solid border-gray-300 focus:border-blue-600 focus:border-2 focus:outline-none
               px-3 w-full text-gray-700 h-8"
+                value={totalAmount.toString()}
+                onChange={() => {}}
               />
             </div>
             <div className="px-2 m-2 pt-14">

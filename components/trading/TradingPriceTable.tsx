@@ -17,35 +17,35 @@ export default function TradingPriceTable() {
         </thead>
         <tbody>
           <tr className="bg-white border-b">
-            <td className="py-4 px-6 text-red-600">28000000 +0.01%</td>
+            <td className="py-4 px-6 text-red-600">1000 +0.01%</td>
             <td className="py-4 px-6 text-gray-600">0.0001</td>
           </tr>
           <tr className="bg-white border-b">
-            <td className="py-4 px-6 text-red-600">28000000 +0.01%</td>
+            <td className="py-4 px-6 text-red-600">1000 +0.01%</td>
             <td className="py-4 px-6 text-gray-600">0.0001</td>
           </tr>
           <tr className="bg-white border-b">
-            <td className="py-4 px-6 text-red-600">28000000 +0.01%</td>
+            <td className="py-4 px-6 text-red-600">1000 +0.01%</td>
             <td className="py-4 px-6 text-gray-600">0.0001</td>
           </tr>
           <tr className="bg-white border-b">
-            <td className="py-4 px-6 text-blue-600">28000000 -0.01%</td>
+            <td className="py-4 px-6 text-blue-600">1000 -0.01%</td>
             <td className="py-4 px-6 text-gray-600">0.0001</td>
           </tr>
           <tr className="bg-white border-b">
-            <td className="py-4 px-6 text-blue-600">28000000 -0.01%</td>
+            <td className="py-4 px-6 text-blue-600">1000 -0.01%</td>
             <td className="py-4 px-6 text-gray-600">0.0001</td>
           </tr>
           <tr className="bg-white border-b">
-            <td className="py-4 px-6 text-blue-600">28000000 -0.01%</td>
+            <td className="py-4 px-6 text-blue-600">1000 -0.01%</td>
             <td className="py-4 px-6 text-gray-600">0.0001</td>
           </tr>
           <tr className="bg-white border-b">
-            <td className="py-4 px-6 text-blue-600">28000000 -0.01%</td>
+            <td className="py-4 px-6 text-blue-600">1000 -0.01%</td>
             <td className="py-4 px-6 text-gray-600">0.0001</td>
           </tr>
           <tr className="bg-white border-b">
-            <td className="py-4 px-6 text-blue-600">28000000 -0.01%</td>
+            <td className="py-4 px-6 text-blue-600">1000 -0.01%</td>
             <td className="py-4 px-6 text-gray-600">0.0001</td>
           </tr>
         </tbody>

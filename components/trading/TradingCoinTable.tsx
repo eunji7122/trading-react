@@ -1,17 +1,23 @@
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { TradingPair } from "../../model/trading-pair";
+import { useAppSelector } from "../../app/store";
+import { useDispatch } from "react-redux";
+import { setTradingPairs } from "../../features/tradingPairSlice";
 
 interface Props {
   setTradingPair?: (tradingPair: TradingPair) => void;
 }
 
 export default function TradingCoinTable({ setTradingPair }: Props) {
-  const [tradingPairs, setTradingPairs] = useState<TradingPair[]>([]);
+  const dispatch = useDispatch();
+  const tradingPairs = useAppSelector(
+    (state) => state.tradingPair.tradingPairs
+  );
 
   const loadTradingPairs = useCallback(async () => {
     const response = await axios.get<TradingPair[]>("/tradingPairs");
-    setTradingPairs(response.data);
+    dispatch(setTradingPairs(response.data));
     if (setTradingPair) setTradingPair(response.data[0]);
   }, [setTradingPair]);
 

@@ -4,6 +4,8 @@ import { TradingPair } from "../../model/trading-pair";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { CandleData } from "../../model/candle-data";
+import SockJS from "sockjs-client";
+import { Stomp } from "@stomp/stompjs";
 
 interface Props {
   tradingPair: TradingPair;
@@ -52,6 +54,17 @@ export default function TradingChart({ tradingPair }: Props) {
     [candleList]
   );
 
+  useEffect(() => {
+    const socket = new SockJS("http://localhost:8080/websocket");
+    const stompClient = Stomp.over(socket);
+    stompClient.connect({}, function (frame: any) {
+      stompClient.subscribe("/topic/candles/" + tradingPair.id, (message) => {
+        console.log(JSON.parse(message.body));
+        setCandleList(JSON.parse(message.body));
+      });
+    });
+  }, []);
+
   const loadCandleList = useCallback(async () => {
     const TIME_ZONE = 9 * 60 * 60 * 1000; // 9시간
     const d = new Date();
@@ -61,7 +74,7 @@ export default function TradingChart({ tradingPair }: Props) {
 
     const response = await axios.get<CandleData[]>("/transactions/candles", {
       params: {
-        tradingPairId: 1,
+        tradingPairId: tradingPair.id,
         from: "2023-02-05 00:00:00",
         to: now,
       },
@@ -76,7 +89,7 @@ export default function TradingChart({ tradingPair }: Props) {
   return (
     <div className="bg-white m-2">
       <ReactApexChart
-        options={chartState.options}
+        options={chartState.options as any}
         series={chartState.series}
         type="candlestick"
         height={350}
