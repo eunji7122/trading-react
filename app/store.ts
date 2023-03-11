@@ -9,6 +9,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 const reducers = combineReducers({
   auth: authReducer,
   tradingPair: tradingPairReducer,
+  candle: tradingPairReducer,
 });
 
 const persistConfig = {

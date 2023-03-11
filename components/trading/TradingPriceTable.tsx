@@ -52,13 +52,14 @@ export default function TradingPriceTable({ tradingPair }: Props) {
           {sellOrderGathering.map((order) => (
             <tr key={order.price} className="bg-white border-b bg-blue-50">
               <td className="py-4 px-6 text-gray-600">
-                {order.price}&emsp; +
+                {order.price}&emsp;
                 {Math.round(
                   ((order.price - tradingPair.lastPrice) /
                     tradingPair.lastPrice) *
                     100 *
                     100
                 ) / 100}
+                %
               </td>
               <td className="py-4 px-6 text-gray-600">{order.amount}</td>
             </tr>
@@ -73,6 +74,7 @@ export default function TradingPriceTable({ tradingPair }: Props) {
                     100 *
                     100
                 ) / 100}
+                %
               </td>
               <td className="py-4 px-6 text-gray-600">{order.amount}</td>
             </tr>

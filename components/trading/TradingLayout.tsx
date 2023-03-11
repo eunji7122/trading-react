@@ -1,14 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 import TradingCoinTable from "./TradingCoinTable";
 import TradingPriceTable from "./TradingPriceTable";
 import TradingOrder from "./TradingOrder";
 import TradingConclusionTable from "./TradingConclusionTable";
 import TradingChartHeader from "./TradingChartHeader";
 import TradingChart from "./TradingChart";
-import { TradingPair } from "../../model/trading-pair";
+import { useAppSelector } from "../../app/store";
+import { useDispatch } from "react-redux";
+import { setSelectedTradingPairId } from "../../features/tradingPairSlice";
 
 export default function TradingLayout() {
-  const [tradingPair, setTradingPair] = useState<TradingPair>();
+  const dispatch = useDispatch();
+  const tradingPair = useAppSelector((state) =>
+    state.tradingPair.tradingPairs.find(
+      (tradingPair) =>
+        tradingPair.id === state.tradingPair.selectedTradingPairId
+    )
+  );
   return (
     <div className="mx-auto bg-gray-200 w-full h-full">
       <div className="container flex flex-row justify-between mx-auto">
@@ -34,7 +42,11 @@ export default function TradingLayout() {
           )}
         </div>
         <div className="">
-          <TradingCoinTable setTradingPair={setTradingPair} />
+          <TradingCoinTable
+            setTradingPair={(tradingPair) =>
+              dispatch(setSelectedTradingPairId(tradingPair.id))
+            }
+          />
         </div>
       </div>
     </div>

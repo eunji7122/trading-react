@@ -4,19 +4,19 @@ import { TradingPair } from "../../model/trading-pair";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { CandleData } from "../../model/candle-data";
-import SockJS from "sockjs-client";
-import { Stomp } from "@stomp/stompjs";
+import { useAppSelector } from "../../app/store";
 
 interface Props {
   tradingPair: TradingPair;
 }
 
 export default function TradingChart({ tradingPair }: Props) {
+  const [candleList, setCandleList] = useState<CandleData[]>([]);
+  const candles = useAppSelector((state) => state.candle.candles);
+
   const ReactApexChart = dynamic(() => import("react-apexcharts"), {
     ssr: false,
   });
-
-  const [candleList, setCandleList] = useState<CandleData[]>([]);
   const chartState = useMemo(
     () => ({
       series: [
@@ -55,15 +55,8 @@ export default function TradingChart({ tradingPair }: Props) {
   );
 
   useEffect(() => {
-    const socket = new SockJS("http://localhost:8080/websocket");
-    const stompClient = Stomp.over(socket);
-    stompClient.connect({}, function (frame: any) {
-      stompClient.subscribe("/topic/candles/" + tradingPair.id, (message) => {
-        console.log(JSON.parse(message.body));
-        setCandleList(JSON.parse(message.body));
-      });
-    });
-  }, []);
+    setCandleList(candles);
+  }, [candles]);
 
   const loadCandleList = useCallback(async () => {
     const TIME_ZONE = 9 * 60 * 60 * 1000; // 9시간
