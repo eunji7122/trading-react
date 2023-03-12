@@ -10,7 +10,7 @@ export default function TradingChartHeader({ tradingPair }: Props) {
   const [useStateTradingPair, setUseStateTradingPair] = useState<TradingPair>();
 
   const findTradingPair = useAppSelector((state) =>
-    state.tradingPair.tradingPairs.find((x) => x.id == tradingPair.id)
+    state.trading.tradingPairs.find((x) => x.id == tradingPair.id)
   );
 
   useEffect(() => {

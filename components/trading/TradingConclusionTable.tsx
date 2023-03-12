@@ -1,13 +1,18 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import axios from "axios";
 import { Transaction } from "../../model/transaction";
+import { useAppSelector } from "../../app/store";
+import { useDispatch } from "react-redux";
+import { setTransactions } from "../../features/tradingSlice";
 
 export default function TradingConclusionTable() {
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const dispatch = useDispatch();
+
+  const transactions = useAppSelector((state) => state.trading.transactions);
 
   const loadTransactions = useCallback(async () => {
     const response = await axios.get<Transaction[]>("/transactions");
-    setTransactions(response.data);
+    dispatch(setTransactions(response.data));
   }, []);
 
   useEffect(() => {

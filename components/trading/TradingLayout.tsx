@@ -7,14 +7,13 @@ import TradingChartHeader from "./TradingChartHeader";
 import TradingChart from "./TradingChart";
 import { useAppSelector } from "../../app/store";
 import { useDispatch } from "react-redux";
-import { setSelectedTradingPairId } from "../../features/tradingPairSlice";
+import { setSelectedTradingPairId } from "../../features/tradingSlice";
 
 export default function TradingLayout() {
   const dispatch = useDispatch();
   const tradingPair = useAppSelector((state) =>
-    state.tradingPair.tradingPairs.find(
-      (tradingPair) =>
-        tradingPair.id === state.tradingPair.selectedTradingPairId
+    state.trading.tradingPairs.find(
+      (tradingPair) => tradingPair.id === state.trading.selectedTradingPairId
     )
   );
   return (

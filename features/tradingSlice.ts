@@ -1,21 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { TradingPair } from "../model/trading-pair";
 import { CandleData } from "../model/candle-data";
+import { Transaction } from "../model/transaction";
 
-type TradingPairState = {
+type TradingState = {
   selectedTradingPairId: number;
   tradingPairs: TradingPair[];
   candles: CandleData[];
+  transactions: Transaction[];
 };
 
-const initialState: TradingPairState = {
+const initialState: TradingState = {
   selectedTradingPairId: 0,
   tradingPairs: [],
   candles: [],
+  transactions: [],
 };
 
-export const tradingPairSlice = createSlice({
-  name: "tradingPairSlice",
+export const tradingSlice = createSlice({
+  name: "tradingSlice",
   initialState,
   reducers: {
     setSelectedTradingPairId: (state, action) => {
@@ -27,9 +30,16 @@ export const tradingPairSlice = createSlice({
     setCandles: (state, action) => {
       state.candles = action.payload;
     },
+    setTransactions: (state, action) => {
+      state.transactions = action.payload;
+    },
   },
 });
 
-export const { setSelectedTradingPairId, setTradingPairs, setCandles } =
-  tradingPairSlice.actions;
-export default tradingPairSlice.reducer;
+export const {
+  setSelectedTradingPairId,
+  setTradingPairs,
+  setCandles,
+  setTransactions,
+} = tradingSlice.actions;
+export default tradingSlice.reducer;

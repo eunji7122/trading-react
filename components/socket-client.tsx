@@ -1,7 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import SockJS from "sockjs-client";
 import { CompatClient, Stomp } from "@stomp/stompjs";
-import { setTradingPairs, setCandles } from "../features/tradingPairSlice";
+import {
+  setTradingPairs,
+  setCandles,
+  setTransactions,
+} from "../features/tradingSlice";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../app/store";
 import { StompSubscription } from "@stomp/stompjs/esm6/stomp-subscription";
@@ -10,7 +14,7 @@ export default function SocketClient() {
   const dispatch = useDispatch();
   const socketClient = useRef<CompatClient>();
   const selectedTradingPairId = useAppSelector(
-    (state) => state.tradingPair.selectedTradingPairId
+    (state) => state.trading.selectedTradingPairId
   );
   const [candleSubscriptions, setCandleSubscriptions] = useState<
     StompSubscription[]
@@ -24,6 +28,12 @@ export default function SocketClient() {
         const tradingPairs = JSON.parse(message.body);
         dispatch(setTradingPairs(tradingPairs));
       });
+
+      socketClient.current?.subscribe("/topic/transactions", (message) => {
+        const transactions = JSON.parse(message.body);
+        dispatch(setTransactions(transactions));
+      });
+
       const subscription = socketClient.current?.subscribe(
         `/topic/candles/${selectedTradingPairId}`,
         (message) => {

@@ -12,7 +12,7 @@ interface Props {
 
 export default function TradingChart({ tradingPair }: Props) {
   const [candleList, setCandleList] = useState<CandleData[]>([]);
-  const candles = useAppSelector((state) => state.candle.candles);
+  const candles = useAppSelector((state) => state.trading.candles);
 
   const ReactApexChart = dynamic(() => import("react-apexcharts"), {
     ssr: false,
